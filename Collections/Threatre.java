@@ -10,7 +10,7 @@ public class Threatre {
     private String threatreName;
     private int numRows ;
     private int numCol; 
-    private  List<Seat> seats = new ArrayList<>();
+    public  List<Seat> seats = new ArrayList<>();
 
     public Threatre(String threatreName, int numRows, int numCol) {
         if(threatreName.isEmpty()){
@@ -51,7 +51,7 @@ public class Threatre {
         }
     }
     
-    private class Seat implements Comparable<Seat>{
+    public class Seat implements Comparable<Seat>{
 
         private String seatNum;
         private boolean reserved = false;
