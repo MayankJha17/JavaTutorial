@@ -35,6 +35,14 @@ public class Main {
       Collections.shuffle(seatsCopy); // randomly shuffle the list 
       printList(seatsCopy);
 
+      System.out.println("=========================================");
+
+      Threatre.Seat minSeat = Collections.min(seatsCopy); // Finding min elements
+      Threatre.Seat maxSeat = Collections.max(seatsCopy); // Finding max elements
+
+      System.out.println("Min element is " + minSeat.getNumSeat() + " Max element " + maxSeat.getNumSeat());
+
+
     }
 
     public static void printList(List<Threatre.Seat> seats){
