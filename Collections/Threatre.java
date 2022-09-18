@@ -1,6 +1,7 @@
 package Collections;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,51 +30,37 @@ public class Threatre {
         }
     }
 
-    public Optional<Seat> getSeatByNum(String seatNum){
-        Seat reservedSeat = null;
+    public boolean getSeatByNum(String seatNum){
+        Seat requestedSeat = null;
         for (Seat seat : seats) {
             if(seatNum.equals(seat.getNumSeat())){
-                reservedSeat = seat;
+                requestedSeat = seat;
                 break;
             }
         }
-        if(reservedSeat==null){
+        if(requestedSeat==null){
             System.out.println("Sorry there is no seat which you have requested");
-            return  Optional.empty();
+            return  false;
         }
-        return Optional.of(reservedSeat);
+        return requestedSeat.reserve();
     }
 
-    public void changeSeatReservedStatus(Seat seatReserve){
-           
-        for (Seat seat : seats) {
-             if(seatReserve.getNumSeat().equals(seat.getNumSeat())){
-                seat.setReserved(true);
-                break;
-             }
-        }
-    }
 
     public static void main(String[] args) {
         Threatre threatre = new Threatre("Empire", 6, 6);
-        Optional<Seat> optionalSeat = threatre.getSeatByNum("E01");
-        if(optionalSeat.isPresent()){
-            Seat seat = optionalSeat.get();
-            if(seat.isReserved()){
-                System.out.println("Seat is reserved");
-            }
-            else{
-                System.out.println("Please pay ");
-                System.out.println(seat.isReserved());
-                // Considering customer has done payment we can change reserved statuds to true
-                threatre.changeSeatReservedStatus(seat);
-            }
+        String seatNum = "E01";
+        if(threatre.getSeatByNum(seatNum)){
+               System.out.println("Please pay");
         }
         else{
-            System.out.println("There is no seat available which you are requested");
+            System.out.println("Sorry seat is already reserved");
         }
-
-
+        if(threatre.getSeatByNum(seatNum)){
+            System.out.println("Please pay");
+     }
+     else{
+         System.out.println("Sorry seat is already reserved");
+     }
     }
 
 }
@@ -81,7 +68,7 @@ public class Threatre {
 class Seat{
 
     private String seatNum;
-    private boolean reserved;
+    private boolean reserved = false;
 
     public Seat(String numSeat) {
         this.seatNum = numSeat;
@@ -98,5 +85,14 @@ class Seat{
     }
     public void setReserved(boolean reserved) {
         this.reserved = reserved;
+    }
+
+    public boolean reserve() {
+        if(!this.reserved) {
+            this.reserved = true;
+            return true;
+        } else {
+            return false;
+        }
     }
 }
