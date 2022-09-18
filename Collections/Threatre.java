@@ -1,9 +1,9 @@
 package Collections;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+
 
 public class Threatre {
    
@@ -31,18 +31,24 @@ public class Threatre {
     }
 
     public boolean getSeatByNum(String seatNum){
-        Seat requestedSeat = null;
-        for (Seat seat : seats) {
-            if(seatNum.equals(seat.getNumSeat())){
-                requestedSeat = seat;
-                break;
-            }
+        Seat requestedSeat = new Seat(seatNum);
+        int foundSeat = Collections.binarySearch(seats , requestedSeat , null);
+        if(foundSeat>=0){
+            System.out.println("Seat found with seat number "+ seatNum);
+            return seats.get(foundSeat).reserve();
         }
-        if(requestedSeat==null){
-            System.out.println("Sorry there is no seat which you have requested");
-            return  false;
+        else{
+            System.out.println("No seat found with seat number "+seatNum);
+            return false;
         }
-        return requestedSeat.reserve();
+    }
+ 
+    public void getSeats(){
+        for (Seat seat : this.seats) {
+
+            System.out.println(seat.getNumSeat());
+            
+        }
     }
 
 
@@ -65,7 +71,7 @@ public class Threatre {
 
 }
 
-class Seat{
+class Seat implements Comparable<Seat>{
 
     private String seatNum;
     private boolean reserved = false;
@@ -95,4 +101,13 @@ class Seat{
             return false;
         }
     }
+
+    @Override
+    public int compareTo(Seat seat) {
+        return this.seatNum.compareToIgnoreCase(seat.getNumSeat());
+    }
+
+   
+
+    
 }
