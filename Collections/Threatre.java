@@ -50,10 +50,51 @@ public class Threatre {
             
         }
     }
+    
+    private class Seat implements Comparable<Seat>{
+
+        private String seatNum;
+        private boolean reserved = false;
+    
+        public Seat(String numSeat) {
+            this.seatNum = numSeat;
+        }
+        
+        public String getNumSeat() {
+            return seatNum;
+        }
+        public void setNumSeat(String numSeat) {
+            this.seatNum = numSeat;
+        }
+        public boolean isReserved() {
+            return reserved;
+        }
+        public void setReserved(boolean reserved) {
+            this.reserved = reserved;
+        }
+    
+        public boolean reserve() {
+            if(!this.reserved) {
+                this.reserved = true;
+                return true;
+            } else {
+                return false;
+            }
+        }
+    
+        @Override
+        public int compareTo(Seat seat) {
+            return this.seatNum.compareToIgnoreCase(seat.getNumSeat());
+        }
+        
+    }
+
+
 
 
     public static void main(String[] args) {
         Threatre threatre = new Threatre("Empire", 6, 6);
+        List<Threatre.Seat> seatsCopy = new ArrayList<>(threatre.seats);
         String seatNum = "E01";
         if(threatre.getSeatByNum(seatNum)){
                System.out.println("Please pay");
@@ -71,43 +112,3 @@ public class Threatre {
 
 }
 
-class Seat implements Comparable<Seat>{
-
-    private String seatNum;
-    private boolean reserved = false;
-
-    public Seat(String numSeat) {
-        this.seatNum = numSeat;
-    }
-    
-    public String getNumSeat() {
-        return seatNum;
-    }
-    public void setNumSeat(String numSeat) {
-        this.seatNum = numSeat;
-    }
-    public boolean isReserved() {
-        return reserved;
-    }
-    public void setReserved(boolean reserved) {
-        this.reserved = reserved;
-    }
-
-    public boolean reserve() {
-        if(!this.reserved) {
-            this.reserved = true;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public int compareTo(Seat seat) {
-        return this.seatNum.compareToIgnoreCase(seat.getNumSeat());
-    }
-
-   
-
-    
-}
